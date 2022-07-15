@@ -1,23 +1,13 @@
-const fs = require('fs');
-const { parse } = require('csv-parse');
+const http = require('http');
 
-// parse();
-const results = [];
+const PORT = 3000;
 
-fs.createReadStream('kepler_data.csv')
-  .pipe(
-    parse({
-      comment: '#',
-      columns: true,
-    })
-  )
-  .on('data', (data) => {
-    results.push(data);
-  })
-  .on('error', (err) => {
-    console.log(err);
-  })
-  .on('end', () => {
-    console.log(results);
-    console.log('Done');
+const server = http.createServer((req, res) => {
+  res.writeHead(200, {
+    'Content-Type': 'application/json',
   });
+});
+
+server.listen(PORT, () => {
+  console.log(`Server started on ${PORT}`);
+});
